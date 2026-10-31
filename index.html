@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050806">
+  <title>GOALGPT | Football AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><span class="ball">⚽</span><span>GOAL<span>GPT</span></span></a>
+  <div class="top-actions"><span class="free">FREE</span><span class="avatar">M</span></div>
+</header>
+<nav class="nav">
+  <a class="active" href="#home">⌂ <small>الرئيسية</small></a>
+  <a href="#fixtures">⚽ <small>المباريات</small></a>
+  <a href="#bots">♟ <small>بوتات AI</small></a>
+  <a href="#history">↗ <small>السجل</small></a>
+</nav>
+<main id="home">
+  <section class="hero">
+    <div class="eyebrow">منصة تحليل كرة القدم بالذكاء الاصطناعي</div>
+    <h1>توقع أذكى.<br><span>تحليل أعمق.</span></h1>
+    <p>ثمانية محركات تحليل مستقلة تقارن المؤشرات الإحصائية للمباراة.</p>
+    <a class="cta" href="#predict">ابدأ تحليل مباراة <b>←</b></a>
+  </section>
+
+
+  <section class="section" id="fixtures">
+    <div class="section-head">
+      <div><span class="eyebrow">LIVE FOOTBALL DATA</span><h2>مباريات اليوم</h2></div>
+      <button class="refresh" id="fixtures-refresh">تحديث ↻</button>
+    </div>
+    <div class="fixtures-toolbar panel">
+      <label>اختار التاريخ <input id="fixtures-date" type="date"></label>
+      <span id="provider-state" class="provider-state">كنتحقق من مصدر البيانات...</span>
+    </div>
+    <div id="fixtures-list" class="fixtures-list"><div class="empty">جاري تحميل المباريات...</div></div>
+  </section>
+
+  <section class="section" id="predict">
+    <div class="section-head"><div><span class="eyebrow">AI MATCH CENTER</span><h2>حلّل مباراة</h2></div><span class="live-tag">● ANALYSIS</span></div>
+    <form id="predict-form" class="panel">
+      <div class="teams">
+        <label>الفريق المستضيف<input name="home" placeholder="مثلاً: Real Madrid" required maxlength="60"></label>
+        <div class="versus">VS</div>
+        <label>الفريق الضيف<input name="away" placeholder="مثلاً: Barcelona" required maxlength="60"></label>
+      </div>
+      <div class="form-title">متوسط الأهداف في المباراة الواحدة</div>
+      <div class="stats-grid">
+        <label>المستضيف — سجل<input name="home_scored" type="number" min="0" max="10" step=".1" value="1.6" required></label>
+        <label>المستضيف — استقبل<input name="home_conceded" type="number" min="0" max="10" step=".1" value="1.1" required></label>
+        <label>الضيف — سجل<input name="away_scored" type="number" min="0" max="10" step=".1" value="1.3" required></label>
+        <label>الضيف — استقبل<input name="away_conceded" type="number" min="0" max="10" step=".1" value="1.4" required></label>
+      </div>
+      <p class="hint">أدخل متوسطات آخر المباريات أو إحصائيات الموسم. لا تدخل مجموع الأهداف.</p>
+      <button class="primary" id="submit-btn" type="submit">⚡ حلّل المباراة بواسطة 8 بوتات</button>
+      <div id="error" class="error"></div>
+    </form>
+    <div id="results" class="results hidden"></div>
+  </section>
+
+  <section class="section" id="bots">
+    <div class="section-head"><div><span class="eyebrow">OUR AI ENGINES</span><h2>بوتات الذكاء الاصطناعي</h2></div></div>
+    <div class="bot-grid">
+      {% for bot in bots %}
+      <article class="bot-card"><div class="bot-icon">◉</div><div><b>{{ bot.name }}</b><small>{{ bot.style }}</small></div><span class="dot"></span></article>
+      {% endfor %}
+    </div>
+    <p class="hint">نسبة النجاح تظهر بعد تسجيل نتائج مباريات فعلية، ولا تُعرض كنسبة وهمية عند عدم وجود بيانات.</p>
+  </section>
+
+  <section class="section" id="history">
+    <div class="section-head"><div><span class="eyebrow">TRACK RECORD</span><h2>آخر التوقعات</h2></div><button class="refresh" id="refresh">تحديث ↻</button></div>
+    <div id="history-list" class="history-list"><div class="empty">جاري تحميل السجل...</div></div>
+  </section>
+</main>
+<footer>GOALGPT AI <span>•</span> التحليل احتمالي وليس ضماناً للنتيجة.</footer>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
